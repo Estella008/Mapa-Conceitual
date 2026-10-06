@@ -1,81 +1,46 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mapa Conceitual — Bacharelado em Sistemas de Informação | IFMG Ouro Branco</title>
+
     <style>
         :root {
             --bg: #f5f7fb;
             --ink: #182230;
             --muted: #5f6b7a;
+
             --blue: #2563eb;
             --blue-bg: #eff6ff;
+
             --green: #16803c;
             --green-bg: #ecfdf3;
+
             --purple: #7c3aed;
             --purple-bg: #f5f3ff;
+
             --pink: #db2777;
             --pink-bg: #fdf2f8;
+
             --orange: #c2410c;
             --orange-bg: #fff7ed;
+
             --slate: #475569;
             --slate-bg: #f1f5f9;
+
             --teal: #0f766e;
             --teal-bg: #ecfeff;
+
             --gold: #a16207;
             --gold-bg: #fefce8;
         }
 
         * {
-            box-sizing: border-box
-        }
-
-        /* Estado normal das matérias */
-        .node {
-            transition: opacity 0.3s, filter 0.3s, stroke-width 0.3s;
-        }
-
-        /* Quando uma carreira é selecionada */
-        .node.dimmed {
-            opacity: 0.2;
-        }
-
-        /* Matérias relacionadas à carreira */
-        .node.highlighted {
-            opacity: 1;
-            stroke: #16a34a !important;
-            stroke-width: 5 !important;
-            filter: drop-shadow(0 0 7px #16a34a);
-        }
-
-        /* Linhas criadas pelo JavaScript */
-        .career-link {
-            fill: none;
-            stroke: #16a34a;
-            stroke-width: 4;
-            stroke-dasharray: 10 6;
-            marker-end: url(#arrow-green);
-            opacity: 0.9;
-        }
-
-        /* Carreira selecionada */
-        .career-selected {
-            fill: #52a09a !important;
-            stroke: #166b65 !important;
-            stroke-width: 5 !important;
-        }
-
-        .career-button {
-            fill: #a0efe8;
-            stroke: #61928e;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .career-button:hover {
-            fill: #52a09a;
+            box-sizing: border-box;
         }
 
         body {
@@ -83,31 +48,31 @@
             font-family: Arial, Helvetica, sans-serif;
             background: var(--bg);
             color: var(--ink);
-            line-height: 1.45
+            line-height: 1.45;
         }
 
         header {
             background: #9aaeee;
             color: white;
             padding: 32px 5vw;
-            box-shadow: 0 3px 12px #0002
+            box-shadow: 0 3px 12px #0002;
         }
 
         header h1 {
             margin: 0 0 8px;
-            font-size: clamp(24px, 3vw, 38px)
+            font-size: clamp(24px, 3vw, 38px);
         }
 
         header p {
             margin: 4px 0;
             max-width: 1000px;
-            color: #dbeafe
+            color: #f1f5ff;
         }
 
         main {
-            max-width: 1800px;
+            max-width: 1900px;
             margin: auto;
-            padding: 24px 20px 50px
+            padding: 24px 20px 50px;
         }
 
         .intro,
@@ -117,18 +82,18 @@
             border-radius: 14px;
             padding: 18px 20px;
             margin-bottom: 18px;
-            box-shadow: 0 2px 8px #0000000a
+            box-shadow: 0 2px 8px #0000000a;
         }
 
         .intro strong {
-            color: #172554
+            color: #172554;
         }
 
         .legend {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 12px
+            margin-top: 12px;
         }
 
         .legend span {
@@ -136,47 +101,47 @@
             border-radius: 999px;
             font-size: 13px;
             font-weight: 700;
-            border: 1px solid #d1d9e4
+            border: 1px solid #d1d9e4;
         }
 
         .l-blue {
             background: var(--blue-bg);
-            color: var(--blue)
+            color: var(--blue);
         }
 
         .l-green {
             background: var(--green-bg);
-            color: var(--green)
+            color: var(--green);
         }
 
         .l-purple {
             background: var(--purple-bg);
-            color: var(--purple)
+            color: var(--purple);
         }
 
         .l-pink {
             background: var(--pink-bg);
-            color: var(--pink)
+            color: var(--pink);
         }
 
         .l-orange {
             background: var(--orange-bg);
-            color: var(--orange)
+            color: var(--orange);
         }
 
         .l-slate {
             background: var(--slate-bg);
-            color: var(--slate)
+            color: var(--slate);
         }
 
         .l-teal {
             background: var(--teal-bg);
-            color: var(--teal)
+            color: var(--teal);
         }
 
         .l-gold {
             background: var(--gold-bg);
-            color: var(--gold)
+            color: var(--gold);
         }
 
         .map-wrap {
@@ -184,7 +149,7 @@
             border: 1px solid #dbe2ea;
             border-radius: 14px;
             overflow: auto;
-            box-shadow: 0 3px 12px #0000000d
+            box-shadow: 0 3px 12px #0000000d;
         }
 
         svg {
@@ -192,439 +157,2380 @@
             min-width: 1500px;
             width: 100%;
             height: auto;
-            background: #fff
-        }
-
-        .node {
-            stroke-width: 2
-        }
-
-        .area {
-            stroke-width: 3
-        }
-
-        .career {
-            stroke-width: 3
-        }
-
-        .elective {
-            stroke-dasharray: 8 6
+            background: #fff;
         }
 
         text {
             font-family: Arial, Helvetica, sans-serif;
-            fill: var(--ink)
+            fill: var(--ink);
         }
 
+        /* =========================================================
+           DISCIPLINAS
+           ========================================================= */
+
+        .node {
+            stroke-width: 2;
+            transition:
+                opacity 0.3s,
+                filter 0.3s,
+                stroke-width 0.3s;
+        }
+
+        .node.dimmed {
+            opacity: 0.18;
+        }
+
+        .node.highlighted {
+            opacity: 1;
+            stroke: #16a34a !important;
+            stroke-width: 5 !important;
+            filter: drop-shadow(0 0 7px #16a34a);
+        }
+
+        .area {
+            stroke-width: 3;
+        }
+
+        .elective {
+            stroke-dasharray: 8 6;
+        }
+
+        /* =========================================================
+           CARREIRAS
+           ========================================================= */
+
+        .career-button {
+            fill: #a0efe8;
+            stroke: #61928e;
+            stroke-width: 2.5;
+            cursor: pointer;
+            transition:
+                fill 0.2s,
+                stroke 0.2s,
+                stroke-width 0.2s,
+                transform 0.2s;
+        }
+
+        .career-button:hover {
+            fill: #70d9d0;
+            stroke: #166b65;
+        }
+
+        .career-selected {
+            fill: #52a09a !important;
+            stroke: #166b65 !important;
+            stroke-width: 5 !important;
+        }
+
+        /* =========================================================
+           SETORES PROFISSIONAIS
+           ========================================================= */
+
+        .sector-box {
+            fill: #ffffff;
+            stroke: #cbd5e1;
+            stroke-width: 2;
+        }
+
+        .sector-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .sector-subtitle {
+            font-size: 13px;
+            fill: #64748b;
+        }
+
+        .career-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           LINHAS CRIADAS PELO JAVASCRIPT
+           ========================================================= */
+
+        .career-link {
+            fill: none;
+            stroke: #16a34a;
+            stroke-width: 3.5;
+            stroke-dasharray: 10 6;
+            marker-end: url(#arrow-green);
+            opacity: 0.85;
+        }
+
+        /* =========================================================
+           TEXTOS
+           ========================================================= */
+
         .small {
-            font-size: 15px
+            font-size: 15px;
         }
 
         .tiny {
-            font-size: 12px
+            font-size: 12px;
         }
 
         .title {
             font-size: 19px;
-            font-weight: 700
+            font-weight: 700;
         }
 
         .area-title {
             font-size: 18px;
-            font-weight: 700
-        }
-
-        .career-title {
-            font-size: 17px;
-            font-weight: 700
+            font-weight: 700;
         }
 
         footer {
             color: var(--muted);
             font-size: 13px;
             margin-top: 16px;
-            text-align: center
+            text-align: center;
         }
 
         a {
-            color: #1d4ed8
+            color: #1d4ed8;
         }
     </style>
 </head>
 
+
 <body>
+
     <header>
         <h1>Mapa Conceitual/Mental — Sistemas de Informação</h1>
-        <p><strong>IFMG — Campus Ouro Branco</strong> · Bacharelado em Sistemas de Informação</p>
-        <p>Relação entre formação, disciplinas, áreas e possibilidades profissionais.</p>
+
+        <p>
+            <strong>IFMG — Campus Ouro Branco</strong>
+            · Bacharelado em Sistemas de Informação
+        </p>
+
+        <p>
+            Relação entre formação, disciplinas, áreas e possibilidades profissionais.
+        </p>
     </header>
 
+
     <main>
+
+        <!-- =====================================================
+             INTRODUÇÃO
+             ===================================================== -->
+
         <section class="intro">
-            <strong>Como ler o mapa:</strong> o curso é representado como uma rede de conhecimentos, e não como uma
-            sequência única. As linhas mostram relações entre disciplinas e áreas; as conexões que chegam às carreiras
-            representam <strong>possíveis trajetórias profissionais</strong>, não requisitos obrigatórios nem garantias
-            de atuação.
+
+            <strong>Como ler o mapa:</strong>
+
+            o curso é representado como uma rede de conhecimentos,
+            e não como uma sequência única.
+
+            As linhas mostram relações entre disciplinas e áreas;
+            as conexões que chegam às profissões representam
+            <strong>possíveis trajetórias profissionais</strong>,
+            não requisitos obrigatórios nem garantias de atuação.
+
             <div class="legend">
-                <span class="l-blue">Programação e Algoritmos</span>
-                <span class="l-green">Dados e Inteligência</span>
-                <span class="l-purple">Infraestrutura e Redes</span>
-                <span class="l-pink">Engenharia de Software</span>
-                <span class="l-orange">Gestão e Negócios</span>
-                <span class="l-slate">Matemática e Fundamentos</span>
-                <span class="l-gold">Formação Complementar</span>
-                <span class="l-teal">Possibilidade profissional</span>
+
+                <span class="l-blue">
+                    Programação e Algoritmos
+                </span>
+
+                <span class="l-green">
+                    Dados e Inteligência
+                </span>
+
+                <span class="l-purple">
+                    Infraestrutura e Redes
+                </span>
+
+                <span class="l-pink">
+                    Engenharia de Software
+                </span>
+
+                <span class="l-orange">
+                    Gestão e Negócios
+                </span>
+
+                <span class="l-slate">
+                    Matemática e Fundamentos
+                </span>
+
+                <span class="l-gold">
+                    Formação Complementar
+                </span>
+
+                <span class="l-teal">
+                    Possibilidade profissional
+                </span>
+
             </div>
+
         </section>
 
+
+        <!-- =====================================================
+             MAPA
+             ===================================================== -->
+
         <div class="map-wrap">
-            <svg viewBox="0 0 2500 1900" xmlns="http://www.w3.org/2000/svg"
-                aria-label="Mapa conceitual do Bacharelado em Sistemas de Informação do IFMG Campus Ouro Branco">
+
+            <svg
+                viewBox="0 0 2500 2200"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-label="Mapa conceitual do Bacharelado em Sistemas de Informação do IFMG Campus Ouro Branco"
+            >
+
                 <defs>
-                    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-                        <path d="M0,0 L8,4 L0,8 Z" fill="#9aa7b8" />
+
+                    <!-- Setas das relações entre disciplinas -->
+
+                    <marker
+                        id="arrow"
+                        markerWidth="8"
+                        markerHeight="8"
+                        refX="7"
+                        refY="4"
+                        orient="auto"
+                    >
+                        <path
+                            d="M0,0 L8,4 L0,8 Z"
+                            fill="#9aa7b8"
+                        />
                     </marker>
 
-                    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-                        <path d="M0,0 L10,5 L0,10 Z" fill="#16a34a" />
+
+                    <!-- Setas verdes das profissões -->
+
+                    <marker
+                        id="arrow-green"
+                        markerWidth="10"
+                        markerHeight="10"
+                        refX="9"
+                        refY="5"
+                        orient="auto"
+                    >
+                        <path
+                            d="M0,0 L10,5 L0,10 Z"
+                            fill="#16a34a"
+                        />
                     </marker>
+
                 </defs>
 
-                <!-- connections: background layer -->
-                <g fill="none" stroke="#a5b0bf" stroke-width="2" marker-end="url(#arrow)" opacity=".85">
-                    <!-- Programming -->
+
+                <!-- =================================================
+                     RELAÇÕES VERTICAIS ENTRE DISCIPLINAS
+                     ================================================= -->
+
+                <g
+                    fill="none"
+                    stroke="#a5b0bf"
+                    stroke-width="2"
+                    marker-end="url(#arrow)"
+                    opacity=".85"
+                >
+
+                    <!-- Programação -->
+
                     <path d="M250 300 L250 355" />
                     <path d="M250 430 L250 485" />
                     <path d="M250 560 L250 615" />
                     <path d="M250 690 L250 745" />
                     <path d="M250 820 L250 875" />
                     <path d="M250 950 L250 1005" />
-                    <!-- Data -->
+                    <path d="M250 1080 L250 1135" />
+                    <path d="M250 1210 L250 1265" />
+
+
+                    <!-- Dados -->
+
                     <path d="M640 300 L640 355" />
                     <path d="M640 430 L640 485" />
                     <path d="M640 560 L640 615" />
                     <path d="M640 690 L640 745" />
-                    <!-- Math -->
+                    <path d="M640 820 L640 875" />
+                    <path d="M640 950 L640 1005" />
+                    <path d="M640 1080 L640 1135" />
+                    <path d="M640 1210 L640 1265" />
+
+
+                    <!-- Matemática -->
+
                     <path d="M1020 300 L1020 355" />
                     <path d="M1020 430 L1020 485" />
                     <path d="M1020 560 L1020 615" />
+                    <path d="M1020 690 L1020 745" />
+                    <path d="M1020 820 L1020 875" />
+
+
                     <!-- Software -->
+
                     <path d="M1410 300 L1410 355" />
                     <path d="M1410 430 L1410 485" />
                     <path d="M1410 560 L1410 615" />
                     <path d="M1410 690 L1410 745" />
-                    <!-- Infra -->
+                    <path d="M1410 820 L1410 875" />
+                    <path d="M1410 950 L1410 1005" />
+                    <path d="M1410 1080 L1410 1135" />
+                    <path d="M1410 1210 L1410 1265" />
+
+
+                    <!-- Infraestrutura -->
+
                     <path d="M1800 300 L1800 355" />
                     <path d="M1800 430 L1800 485" />
                     <path d="M1800 560 L1800 615" />
-                    <!-- Management -->
+                    <path d="M1800 690 L1800 745" />
+                    <path d="M1800 820 L1800 875" />
+                    <path d="M1800 950 L1800 1005" />
+
+
+                    <!-- Gestão -->
+
                     <path d="M2180 300 L2180 355" />
                     <path d="M2180 430 L2180 485" />
                     <path d="M2180 560 L2180 615" />
                     <path d="M2180 690 L2180 745" />
+                    <path d="M2180 820 L2180 875" />
+                    <path d="M2180 950 L2180 1005" />
+
                 </g>
 
 
+                <!-- =================================================
+                     CURSO
+                     ================================================= -->
+
+                <rect
+                    x="600"
+                    y="35"
+                    width="1300"
+                    height="115"
+                    rx="24"
+                    fill="white"
+                    stroke="#0f172a"
+                    stroke-width="3"
+                />
+
+                <text
+                    x="1250"
+                    y="78"
+                    text-anchor="middle"
+                    style="font-size:26px;font-weight:700"
+                >
+                    BACHARELADO EM SISTEMAS DE INFORMAÇÃO
+                </text>
+
+                <text
+                    x="1250"
+                    y="109"
+                    text-anchor="middle"
+                    style="font-size:17px;fill:#475569"
+                >
+                    IFMG — Campus Ouro Branco · 8 semestres · 3.004 horas
+                </text>
 
 
-                <!-- course -->
-                <rect x="600" y="35" width="1300" height="115" rx="24" fill="white" stroke="#0f172a" stroke-width="3" />
-                <text x="1250" y="78" text-anchor="middle" fill="white"
-                    style="font-size:26px;font-weight:700">BACHARELADO EM SISTEMAS DE INFORMAÇÃO</text>
-                <text x="1250" y="109" text-anchor="middle" fill="#dbeafe" style="font-size:17px">IFMG — Campus Ouro
-                    Branco · 8 semestres · 3.004 horas</text>
+                <!-- =================================================
+                     ÁREAS
+                     ================================================= -->
 
-                <!-- area headers -->
                 <g>
-                    <rect class="area" x="55" y="190" width="390" height="70" rx="16" fill="#dbeafe"
-                        stroke="#2563eb " />
-                    <text class="area-title" x="250" y="233" text-anchor="middle">1 · Programação e Algoritmos</text>
-                    <rect class="area" x="445" y="190" width="390" height="70" rx="16" fill="#dcfce7"
-                        stroke="#16803c" /><text class="area-title" x="640" y="233" text-anchor="middle">2 · Dados e
-                        Inteligência</text>
-                    <rect class="area" x="825" y="190" width="390" height="70" rx="16" fill="#e2e8f0"
-                        stroke="#475569" /><text class="area-title" x="1020" y="233" text-anchor="middle">3 · Matemática
-                        e Fundamentos</text>
-                    <rect class="area" x="1215" y="190" width="390" height="70" rx="16" fill="#fce7f3"
-                        stroke="#db2777" /><text class="area-title" x="1410" y="233" text-anchor="middle">4 · Engenharia
-                        de Software</text>
-                    <rect class="area" x="1605" y="190" width="390" height="70" rx="16" fill="#ede9fe"
-                        stroke="#7c3aed" /><text class="area-title" x="1800" y="233" text-anchor="middle">5 ·
-                        Infraestrutura e Redes</text>
-                    <rect class="area" x="1995" y="190" width="370" height="70" rx="16" fill="#ffedd5"
-                        stroke="#c2410c" /><text class="area-title" x="2180" y="233" text-anchor="middle">6 · Gestão e
-                        Negócios</text>
+
+                    <!-- Programação -->
+
+                    <rect
+                        class="area"
+                        x="55"
+                        y="190"
+                        width="390"
+                        height="70"
+                        rx="16"
+                        fill="#dbeafe"
+                        stroke="#2563eb"
+                    />
+
+                    <text
+                        class="area-title"
+                        x="250"
+                        y="233"
+                        text-anchor="middle"
+                    >
+                        1 · Programação e Algoritmos
+                    </text>
+
+
+                    <!-- Dados -->
+
+                    <rect
+                        class="area"
+                        x="445"
+                        y="190"
+                        width="390"
+                        height="70"
+                        rx="16"
+                        fill="#dcfce7"
+                        stroke="#16803c"
+                    />
+
+                    <text
+                        class="area-title"
+                        x="640"
+                        y="233"
+                        text-anchor="middle"
+                    >
+                        2 · Dados e Inteligência
+                    </text>
+
+
+                    <!-- Matemática -->
+
+                    <rect
+                        class="area"
+                        x="825"
+                        y="190"
+                        width="390"
+                        height="70"
+                        rx="16"
+                        fill="#e2e8f0"
+                        stroke="#475569"
+                    />
+
+                    <text
+                        class="area-title"
+                        x="1020"
+                        y="233"
+                        text-anchor="middle"
+                    >
+                        3 · Matemática e Fundamentos
+                    </text>
+
+
+                    <!-- Software -->
+
+                    <rect
+                        class="area"
+                        x="1215"
+                        y="190"
+                        width="390"
+                        height="70"
+                        rx="16"
+                        fill="#fce7f3"
+                        stroke="#db2777"
+                    />
+
+                    <text
+                        class="area-title"
+                        x="1410"
+                        y="233"
+                        text-anchor="middle"
+                    >
+                        4 · Engenharia de Software
+                    </text>
+
+
+                    <!-- Infra -->
+
+                    <rect
+                        class="area"
+                        x="1605"
+                        y="190"
+                        width="390"
+                        height="70"
+                        rx="16"
+                        fill="#ede9fe"
+                        stroke="#7c3aed"
+                    />
+
+                    <text
+                        class="area-title"
+                        x="1800"
+                        y="233"
+                        text-anchor="middle"
+                    >
+                        5 · Infraestrutura e Redes
+                    </text>
+
+
+                    <!-- Gestão -->
+
+                    <rect
+                        class="area"
+                        x="1995"
+                        y="190"
+                        width="370"
+                        height="70"
+                        rx="16"
+                        fill="#ffedd5"
+                        stroke="#c2410c"
+                    />
+
+                    <text
+                        class="area-title"
+                        x="2180"
+                        y="233"
+                        text-anchor="middle"
+                    >
+                        6 · Gestão e Negócios
+                    </text>
+
                 </g>
 
-                <!-- programming -->
+
+                <!-- =================================================
+                     PROGRAMAÇÃO
+                     ================================================= -->
+
                 <g>
-                    <rect class="node" x="85" y="355" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="introducao-a-programacao" />
-                    <text class="title" x="250" y="386" text-anchor="middle">Introdução à Programação</text><text
-                        class="small" x="250" y="410" text-anchor="middle">1º período</text>
-                    <rect class="node" x="85" y="485" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="algoritmos-e-estrutura-de-dados-i" />
-                    <text class="title" x="250" y="516" text-anchor="middle">Algoritmos e Estrutura de Dados
-                        I</text><text class="small" x="250" y="540" text-anchor="middle">2º período</text>
-                    <rect class="node" x="85" y="615" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="algoritmos-e-estrutura-de-dados-ii" />
-                    <text class="title" x="250" y="646" text-anchor="middle">Algoritmos e Estrutura de Dados
-                        II</text><text class="small" x="250" y="670" text-anchor="middle">3º período</text>
-                    <rect class="node" x="85" y="745" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="programacao-orientada-a-objetos-i" />
-                    <text class="title" x="250" y="776" text-anchor="middle">Programação Orientada a Objetos
-                        I</text><text class="small" x="250" y="800" text-anchor="middle">2º período</text>
-                    <rect class="node" x="85" y="875" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="programacao-orientada-a-objetos-ii" />
-                    <text class="title" x="250" y="906" text-anchor="middle">Programação Orientada a Objetos
-                        II</text><text class="small" x="250" y="930" text-anchor="middle">4º período</text>
-                    <rect class="node" x="85" y="1005" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="programacao-web" /><text class="title" x="250" y="1036" text-anchor="middle">Programação
-                        Web</text><text class="small" x="250" y="1060" text-anchor="middle">4º período</text>
-                    <rect class="node" x="85" y="1135" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="programacao-para-dispositivos-moveis" /><text class="title" x="250" y="1166"
-                        text-anchor="middle">Programação para
-                        Dispositivos Móveis</text><text class="small" x="250" y="1190" text-anchor="middle">6º
-                        período</text>
-                    <rect class="node" x="85" y="1265" width="330" height="75" rx="12" fill="#eff6ff" stroke="#2563eb"
-                        id="projeto-e-analise-de-algoritmos" /><text class="title" x="250" y="1296"
-                        text-anchor="middle">Projeto e Análise
-                        de Algoritmos</text><text class="small" x="250" y="1320" text-anchor="middle">6º período</text>
+
+                    <rect
+                        class="node"
+                        id="introducao-a-programacao"
+                        x="85"
+                        y="355"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Introdução à Programação"
+                    />
+
+                    <text class="title" x="250" y="386" text-anchor="middle">
+                        Introdução à Programação
+                    </text>
+
+                    <text class="small" x="250" y="410" text-anchor="middle">
+                        1º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="algoritmos-e-estrutura-de-dados-i"
+                        x="85"
+                        y="485"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Algoritmos e Estrutura de Dados I"
+                    />
+
+                    <text class="title" x="250" y="516" text-anchor="middle">
+                        Algoritmos e Estrutura de Dados I
+                    </text>
+
+                    <text class="small" x="250" y="540" text-anchor="middle">
+                        2º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="algoritmos-e-estrutura-de-dados-ii"
+                        x="85"
+                        y="615"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Algoritmos e Estrutura de Dados II"
+                    />
+
+                    <text class="title" x="250" y="646" text-anchor="middle">
+                        Algoritmos e Estrutura de Dados II
+                    </text>
+
+                    <text class="small" x="250" y="670" text-anchor="middle">
+                        3º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="programacao-orientada-a-objetos-i"
+                        x="85"
+                        y="745"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Programação Orientada a Objetos I"
+                    />
+
+                    <text class="title" x="250" y="776" text-anchor="middle">
+                        Programação Orientada a Objetos I
+                    </text>
+
+                    <text class="small" x="250" y="800" text-anchor="middle">
+                        2º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="programacao-orientada-a-objetos-ii"
+                        x="85"
+                        y="875"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Programação Orientada a Objetos II"
+                    />
+
+                    <text class="title" x="250" y="906" text-anchor="middle">
+                        Programação Orientada a Objetos II
+                    </text>
+
+                    <text class="small" x="250" y="930" text-anchor="middle">
+                        4º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="programacao-web"
+                        x="85"
+                        y="1005"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Programação Web"
+                    />
+
+                    <text class="title" x="250" y="1036" text-anchor="middle">
+                        Programação Web
+                    </text>
+
+                    <text class="small" x="250" y="1060" text-anchor="middle">
+                        4º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="programacao-para-dispositivos-moveis"
+                        x="85"
+                        y="1135"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Programação para Dispositivos Móveis"
+                    />
+
+                    <text class="title" x="250" y="1166" text-anchor="middle">
+                        Programação para Dispositivos Móveis
+                    </text>
+
+                    <text class="small" x="250" y="1190" text-anchor="middle">
+                        6º período
+                    </text>
+
+
+                    <rect
+                        class="node"
+                        id="projeto-e-analise-de-algoritmos"
+                        x="85"
+                        y="1265"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#eff6ff"
+                        stroke="#2563eb"
+                        data-discipline="Projeto e Análise de Algoritmos"
+                    />
+
+                    <text class="title" x="250" y="1296" text-anchor="middle">
+                        Projeto e Análise de Algoritmos
+                    </text>
+
+                    <text class="small" x="250" y="1320" text-anchor="middle">
+                        6º período
+                    </text>
+
                 </g>
 
-                <!-- data -->
+
+                <!-- =================================================
+                     DADOS
+                     ================================================= -->
+
                 <g>
-                    <rect class="node" x="475" y="355" width="330" height="75" rx="12" fill="#ecfdf3"
-                        stroke="#16803c" /><text class="title" x="640" y="386" text-anchor="middle">Banco de Dados
-                        I</text><text class="small" x="640" y="410" text-anchor="middle">3º período</text>
-                    <rect class="node" x="475" y="485" width="330" height="75" rx="12" fill="#ecfdf3"
-                        stroke="#16803c" /><text class="title" x="640" y="516" text-anchor="middle">Probabilidade e
-                        Estatística</text><text class="small" x="640" y="540" text-anchor="middle">5º período</text>
-                    <rect class="node" x="475" y="615" width="330" height="75" rx="12" fill="#ecfdf3"
-                        stroke="#16803c" /><text class="title" x="640" y="646" text-anchor="middle">Sistemas de Apoio a
-                        Decisão</text><text class="small" x="640" y="670" text-anchor="middle">6º período</text>
-                    <rect class="node" x="475" y="745" width="330" height="75" rx="12" fill="#ecfdf3"
-                        stroke="#16803c" /><text class="title" x="640" y="776" text-anchor="middle">Inteligência
-                        Artificial</text><text class="small" x="640" y="800" text-anchor="middle">7º período</text>
-                    <rect class="node elective" x="475" y="875" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="640" y="906" text-anchor="middle">Banco de Dados
-                        II</text><text class="small" x="640" y="930" text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="475" y="1005" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="640" y="1036" text-anchor="middle">Mineração de
-                        Dados</text><text class="small" x="640" y="1060" text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="475" y="1135" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="640" y="1166" text-anchor="middle">Processamento de
-                        Imagens</text><text class="small" x="640" y="1190" text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="475" y="1265" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="640" y="1296" text-anchor="middle">Tópicos Avançados
-                        em IA</text><text class="small" x="640" y="1320" text-anchor="middle">optativa</text>
+
+                    <rect class="node"
+                        x="475" y="355"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#ecfdf3"
+                        stroke="#16803c"
+                        data-discipline="Banco de Dados I"
+                    />
+
+                    <text class="title" x="640" y="386" text-anchor="middle">
+                        Banco de Dados I
+                    </text>
+
+                    <text class="small" x="640" y="410" text-anchor="middle">
+                        3º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="475" y="485"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#ecfdf3"
+                        stroke="#16803c"
+                        data-discipline="Probabilidade e Estatística"
+                    />
+
+                    <text class="title" x="640" y="516" text-anchor="middle">
+                        Probabilidade e Estatística
+                    </text>
+
+                    <text class="small" x="640" y="540" text-anchor="middle">
+                        5º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="475" y="615"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#ecfdf3"
+                        stroke="#16803c"
+                        data-discipline="Sistemas de Apoio a Decisão"
+                    />
+
+                    <text class="title" x="640" y="646" text-anchor="middle">
+                        Sistemas de Apoio a Decisão
+                    </text>
+
+                    <text class="small" x="640" y="670" text-anchor="middle">
+                        6º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="475" y="745"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#ecfdf3"
+                        stroke="#16803c"
+                        data-discipline="Inteligência Artificial"
+                    />
+
+                    <text class="title" x="640" y="776" text-anchor="middle">
+                        Inteligência Artificial
+                    </text>
+
+                    <text class="small" x="640" y="800" text-anchor="middle">
+                        7º período
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="475" y="875"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Banco de Dados II"
+                    />
+
+                    <text class="title" x="640" y="906" text-anchor="middle">
+                        Banco de Dados II
+                    </text>
+
+                    <text class="small" x="640" y="930" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="475" y="1005"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Mineração de Dados"
+                    />
+
+                    <text class="title" x="640" y="1036" text-anchor="middle">
+                        Mineração de Dados
+                    </text>
+
+                    <text class="small" x="640" y="1060" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="475" y="1135"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Processamento de Imagens"
+                    />
+
+                    <text class="title" x="640" y="1166" text-anchor="middle">
+                        Processamento de Imagens
+                    </text>
+
+                    <text class="small" x="640" y="1190" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="475" y="1265"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Tópicos Avançados em IA"
+                    />
+
+                    <text class="title" x="640" y="1296" text-anchor="middle">
+                        Tópicos Avançados em IA
+                    </text>
+
+                    <text class="small" x="640" y="1320" text-anchor="middle">
+                        optativa
+                    </text>
+
                 </g>
 
-                <!-- math -->
+
+                <!-- =================================================
+                     MATEMÁTICA
+                     ================================================= -->
+
                 <g>
-                    <rect class="node" x="855" y="355" width="330" height="75" rx="12" fill="#f1f5f9"
-                        stroke="#475569" /><text class="title" x="1020" y="386"
-                        text-anchor="middle">Pré-Cálculo</text><text class="small" x="1020" y="410"
-                        text-anchor="middle">1º período</text>
-                    <rect class="node" x="855" y="485" width="330" height="75" rx="12" fill="#f1f5f9"
-                        stroke="#475569" /><text class="title" x="1020" y="516" text-anchor="middle">Cálculo Diferencial
-                        e Integral I</text><text class="small" x="1020" y="540" text-anchor="middle">2º período</text>
-                    <rect class="node" x="855" y="615" width="330" height="75" rx="12" fill="#f1f5f9"
-                        stroke="#475569" /><text class="title" x="1020" y="646" text-anchor="middle">Álgebra Linear e
-                        Geometria Analítica</text><text class="small" x="1020" y="670" text-anchor="middle">3º
-                        período</text>
-                    <rect class="node" x="855" y="745" width="330" height="75" rx="12" fill="#f1f5f9"
-                        stroke="#475569" /><text class="title" x="1020" y="776" text-anchor="middle">Matemática
-                        Discreta</text><text class="small" x="1020" y="800" text-anchor="middle">4º período</text>
-                    <rect class="node elective" x="855" y="875" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="1020" y="906" text-anchor="middle">Teoria dos
-                        Grafos</text><text class="small" x="1020" y="930" text-anchor="middle">optativa</text>
+
+                    <rect class="node"
+                        x="855" y="355"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#f1f5f9"
+                        stroke="#475569"
+                        data-discipline="Pré-Cálculo"
+                    />
+
+                    <text class="title" x="1020" y="386" text-anchor="middle">
+                        Pré-Cálculo
+                    </text>
+
+                    <text class="small" x="1020" y="410" text-anchor="middle">
+                        1º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="855" y="485"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#f1f5f9"
+                        stroke="#475569"
+                        data-discipline="Cálculo Diferencial e Integral I"
+                    />
+
+                    <text class="title" x="1020" y="516" text-anchor="middle">
+                        Cálculo Diferencial e Integral I
+                    </text>
+
+                    <text class="small" x="1020" y="540" text-anchor="middle">
+                        2º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="855" y="615"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#f1f5f9"
+                        stroke="#475569"
+                        data-discipline="Álgebra Linear e Geometria Analítica"
+                    />
+
+                    <text class="title" x="1020" y="646" text-anchor="middle">
+                        Álgebra Linear e Geometria Analítica
+                    </text>
+
+                    <text class="small" x="1020" y="670" text-anchor="middle">
+                        3º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="855" y="745"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#f1f5f9"
+                        stroke="#475569"
+                        data-discipline="Matemática Discreta"
+                    />
+
+                    <text class="title" x="1020" y="776" text-anchor="middle">
+                        Matemática Discreta
+                    </text>
+
+                    <text class="small" x="1020" y="800" text-anchor="middle">
+                        4º período
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="855" y="875"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Teoria dos Grafos"
+                    />
+
+                    <text class="title" x="1020" y="906" text-anchor="middle">
+                        Teoria dos Grafos
+                    </text>
+
+                    <text class="small" x="1020" y="930" text-anchor="middle">
+                        optativa
+                    </text>
+
                 </g>
 
-                <!-- software -->
+
+                <!-- =================================================
+                     ENGENHARIA DE SOFTWARE
+                     ================================================= -->
+
                 <g>
-                    <rect class="node" x="1245" y="355" width="330" height="75" rx="12" fill="#fdf2f8"
-                        stroke="#db2777" /><text class="title" x="1410" y="386" text-anchor="middle">Engenharia de
-                        Software I</text><text class="small" x="1410" y="410" text-anchor="middle">3º período</text>
-                    <rect class="node" x="1245" y="485" width="330" height="75" rx="12" fill="#fdf2f8"
-                        stroke="#db2777" /><text class="title" x="1410" y="516" text-anchor="middle">Engenharia de
-                        Software II</text><text class="small" x="1410" y="540" text-anchor="middle">5º período</text>
-                    <rect class="node" x="1245" y="615" width="330" height="75" rx="12" fill="#fdf2f8"
-                        stroke="#db2777" /><text class="title" x="1410" y="646" text-anchor="middle">Interface Humano
-                        Computador</text><text class="small" x="1410" y="670" text-anchor="middle">7º período</text>
-                    <rect class="node" x="1245" y="745" width="330" height="75" rx="12" fill="#fdf2f8"
-                        stroke="#db2777" /><text class="title" x="1410" y="776" text-anchor="middle">Qualidade de
-                        Software</text><text class="small" x="1410" y="800" text-anchor="middle">8º período</text>
-                    <rect class="node" x="1245" y="875" width="330" height="75" rx="12" fill="#fdf2f8"
-                        stroke="#db2777" /><text class="title" x="1410" y="906" text-anchor="middle">Gestão de
-                        Projetos</text><text class="small" x="1410" y="930" text-anchor="middle">7º período</text>
-                    <rect class="node elective" x="1245" y="1005" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="1410" y="1036" text-anchor="middle">Gerência de
-                        Projetos de Software</text><text class="small" x="1410" y="1060"
-                        text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="1245" y="1135" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="1410" y="1166" text-anchor="middle">Sistemas de
-                        Garantia de Qualidade</text><text class="small" x="1410" y="1190"
-                        text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="1245" y="1265" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="1410" y="1296" text-anchor="middle">Tópicos Avançados
-                        em Engenharia</text><text class="small" x="1410" y="1320" text-anchor="middle">optativa</text>
+
+                    <rect class="node"
+                        x="1245" y="355"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fdf2f8"
+                        stroke="#db2777"
+                        data-discipline="Engenharia de Software I"
+                    />
+
+                    <text class="title" x="1410" y="386" text-anchor="middle">
+                        Engenharia de Software I
+                    </text>
+
+                    <text class="small" x="1410" y="410" text-anchor="middle">
+                        3º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1245" y="485"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fdf2f8"
+                        stroke="#db2777"
+                        data-discipline="Engenharia de Software II"
+                    />
+
+                    <text class="title" x="1410" y="516" text-anchor="middle">
+                        Engenharia de Software II
+                    </text>
+
+                    <text class="small" x="1410" y="540" text-anchor="middle">
+                        5º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1245" y="615"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fdf2f8"
+                        stroke="#db2777"
+                        data-discipline="Interface Humano Computador"
+                    />
+
+                    <text class="title" x="1410" y="646" text-anchor="middle">
+                        Interface Humano Computador
+                    </text>
+
+                    <text class="small" x="1410" y="670" text-anchor="middle">
+                        7º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1245" y="745"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fdf2f8"
+                        stroke="#db2777"
+                        data-discipline="Qualidade de Software"
+                    />
+
+                    <text class="title" x="1410" y="776" text-anchor="middle">
+                        Qualidade de Software
+                    </text>
+
+                    <text class="small" x="1410" y="800" text-anchor="middle">
+                        8º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1245" y="875"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fdf2f8"
+                        stroke="#db2777"
+                        data-discipline="Gestão de Projetos"
+                    />
+
+                    <text class="title" x="1410" y="906" text-anchor="middle">
+                        Gestão de Projetos
+                    </text>
+
+                    <text class="small" x="1410" y="930" text-anchor="middle">
+                        7º período
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="1245" y="1005"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Gerência de Projetos de Software"
+                    />
+
+                    <text class="title" x="1410" y="1036" text-anchor="middle">
+                        Gerência de Projetos de Software
+                    </text>
+
+                    <text class="small" x="1410" y="1060" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="1245" y="1135"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Sistemas de Garantia de Qualidade"
+                    />
+
+                    <text class="title" x="1410" y="1166" text-anchor="middle">
+                        Sistemas de Garantia de Qualidade
+                    </text>
+
+                    <text class="small" x="1410" y="1190" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="1245" y="1265"
+                        width="330" height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Tópicos Avançados em Engenharia"
+                    />
+
+                    <text class="title" x="1410" y="1296" text-anchor="middle">
+                        Tópicos Avançados em Engenharia
+                    </text>
+
+                    <text class="small" x="1410" y="1320" text-anchor="middle">
+                        optativa
+                    </text>
+
                 </g>
 
-                <!-- infra -->
+
+                <!-- =================================================
+                     INFRAESTRUTURA
+                     ================================================= -->
+
                 <g>
-                    <rect class="node" x="1635" y="355" width="330" height="75" rx="12" fill="#f5f3ff"
-                        stroke="#7c3aed" /><text class="title" x="1800" y="386" text-anchor="middle">Arquitetura e
-                        Organização</text><text class="small" x="1800" y="410" text-anchor="middle">de Computadores · 3º
-                        período</text>
-                    <rect class="node" x="1635" y="485" width="330" height="75" rx="12" fill="#f5f3ff"
-                        stroke="#7c3aed" /><text class="title" x="1800" y="516" text-anchor="middle">Sistemas
-                        Operacionais</text><text class="small" x="1800" y="540" text-anchor="middle">4º período</text>
-                    <rect class="node" x="1635" y="615" width="330" height="75" rx="12" fill="#f5f3ff"
-                        stroke="#7c3aed" /><text class="title" x="1800" y="646" text-anchor="middle">Redes de
-                        Computadores I</text><text class="small" x="1800" y="670" text-anchor="middle">5º período</text>
-                    <rect class="node" x="1635" y="745" width="330" height="75" rx="12" fill="#f5f3ff"
-                        stroke="#7c3aed" /><text class="title" x="1800" y="776" text-anchor="middle">Sistemas
-                        Distribuídos</text><text class="small" x="1800" y="800" text-anchor="middle">6º período</text>
-                    <rect class="node elective" x="1635" y="875" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="1800" y="906" text-anchor="middle">Redes de
-                        Computadores II</text><text class="small" x="1800" y="930" text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="1635" y="1005" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="1800" y="1036" text-anchor="middle">Tópicos em
-                        Sistemas Computacionais</text><text class="small" x="1800" y="1060" text-anchor="middle">e Redes
-                        · optativa</text>
+
+                    <rect class="node"
+                        x="1635" y="355"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#f5f3ff"
+                        stroke="#7c3aed"
+                        data-discipline="Arquitetura e Organização"
+                    />
+
+                    <text class="title" x="1800" y="386" text-anchor="middle">
+                        Arquitetura e Organização
+                    </text>
+
+                    <text class="small" x="1800" y="410" text-anchor="middle">
+                        de Computadores · 3º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1635" y="485"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#f5f3ff"
+                        stroke="#7c3aed"
+                        data-discipline="Sistemas Operacionais"
+                    />
+
+                    <text class="title" x="1800" y="516" text-anchor="middle">
+                        Sistemas Operacionais
+                    </text>
+
+                    <text class="small" x="1800" y="540" text-anchor="middle">
+                        4º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1635" y="615"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#f5f3ff"
+                        stroke="#7c3aed"
+                        data-discipline="Redes de Computadores I"
+                    />
+
+                    <text class="title" x="1800" y="646" text-anchor="middle">
+                        Redes de Computadores I
+                    </text>
+
+                    <text class="small" x="1800" y="670" text-anchor="middle">
+                        5º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="1635" y="745"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#f5f3ff"
+                        stroke="#7c3aed"
+                        data-discipline="Sistemas Distribuídos"
+                    />
+
+                    <text class="title" x="1800" y="776" text-anchor="middle">
+                        Sistemas Distribuídos
+                    </text>
+
+                    <text class="small" x="1800" y="800" text-anchor="middle">
+                        6º período
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="1635" y="875"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Redes de Computadores II"
+                    />
+
+                    <text class="title" x="1800" y="906" text-anchor="middle">
+                        Redes de Computadores II
+                    </text>
+
+                    <text class="small" x="1800" y="930" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="1635" y="1005"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Tópicos em Sistemas Computacionais"
+                    />
+
+                    <text class="title" x="1800" y="1036" text-anchor="middle">
+                        Tópicos em Sistemas Computacionais
+                    </text>
+
+                    <text class="small" x="1800" y="1060" text-anchor="middle">
+                        e Redes · optativa
+                    </text>
+
                 </g>
 
-                <!-- management -->
+
+                <!-- =================================================
+                     GESTÃO
+                     ================================================= -->
+
                 <g>
-                    <rect class="node" x="2015" y="355" width="330" height="75" rx="12" fill="#fff7ed"
-                        stroke="#c2410c" /><text class="title" x="2180" y="386" text-anchor="middle">Princípios da
-                        Administração I</text><text class="small" x="2180" y="410" text-anchor="middle">1º
-                        período</text>
-                    <rect class="node" x="2015" y="485" width="330" height="75" rx="12" fill="#fff7ed"
-                        stroke="#c2410c" /><text class="title" x="2180" y="516"
-                        text-anchor="middle">Contabilidade</text><text class="small" x="2180" y="540"
-                        text-anchor="middle">3º período</text>
-                    <rect class="node" x="2015" y="615" width="330" height="75" rx="12" fill="#fff7ed"
-                        stroke="#c2410c" /><text class="title" x="2180" y="646" text-anchor="middle">Governança e Gestão
-                        da Informação</text><text class="small" x="2180" y="670" text-anchor="middle">5º período</text>
-                    <rect class="node" x="2015" y="745" width="330" height="75" rx="12" fill="#fff7ed"
-                        stroke="#c2410c" /><text class="title" x="2180" y="776"
-                        text-anchor="middle">Empreendedorismo</text><text class="small" x="2180" y="800"
-                        text-anchor="middle">8º período</text>
-                    <rect class="node elective" x="2015" y="875" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="2180" y="906" text-anchor="middle">Consultoria
-                        Empresarial</text><text class="small" x="2180" y="930" text-anchor="middle">optativa</text>
-                    <rect class="node elective" x="2015" y="1005" width="330" height="75" rx="12" fill="#fefce8"
-                        stroke="#a16207" /><text class="title" x="2180" y="1036" text-anchor="middle">Gestão da
-                        Inovação</text><text class="small" x="2180" y="1060" text-anchor="middle">optativa</text>
+
+                    <rect class="node"
+                        x="2015" y="355"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fff7ed"
+                        stroke="#c2410c"
+                        data-discipline="Princípios da Administração I"
+                    />
+
+                    <text class="title" x="2180" y="386" text-anchor="middle">
+                        Princípios da Administração I
+                    </text>
+
+                    <text class="small" x="2180" y="410" text-anchor="middle">
+                        1º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="2015" y="485"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fff7ed"
+                        stroke="#c2410c"
+                        data-discipline="Contabilidade"
+                    />
+
+                    <text class="title" x="2180" y="516" text-anchor="middle">
+                        Contabilidade
+                    </text>
+
+                    <text class="small" x="2180" y="540" text-anchor="middle">
+                        3º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="2015" y="615"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fff7ed"
+                        stroke="#c2410c"
+                        data-discipline="Governança e Gestão da Informação"
+                    />
+
+                    <text class="title" x="2180" y="646" text-anchor="middle">
+                        Governança e Gestão da Informação
+                    </text>
+
+                    <text class="small" x="2180" y="670" text-anchor="middle">
+                        5º período
+                    </text>
+
+
+                    <rect class="node"
+                        x="2015" y="745"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fff7ed"
+                        stroke="#c2410c"
+                        data-discipline="Empreendedorismo"
+                    />
+
+                    <text class="title" x="2180" y="776" text-anchor="middle">
+                        Empreendedorismo
+                    </text>
+
+                    <text class="small" x="2180" y="800" text-anchor="middle">
+                        8º período
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="2015" y="875"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Consultoria Empresarial"
+                    />
+
+                    <text class="title" x="2180" y="906" text-anchor="middle">
+                        Consultoria Empresarial
+                    </text>
+
+                    <text class="small" x="2180" y="930" text-anchor="middle">
+                        optativa
+                    </text>
+
+
+                    <rect class="node elective"
+                        x="2015" y="1005"
+                        width="330"
+                        height="75"
+                        rx="12"
+                        fill="#fefce8"
+                        stroke="#a16207"
+                        data-discipline="Gestão da Inovação"
+                    />
+
+                    <text class="title" x="2180" y="1036" text-anchor="middle">
+                        Gestão da Inovação
+                    </text>
+
+                    <text class="small" x="2180" y="1060" text-anchor="middle">
+                        optativa
+                    </text>
+
                 </g>
 
-                <!-- support formation -->
-                <rect x="55" y="1400" width="2310" height="145" rx="18" fill="#fffbeb" stroke="#a16207"
-                    stroke-width="3" />
-                <text x="1210" y="1433" text-anchor="middle" style="font-size:20px;font-weight:700;fill:#854d0e">7 ·
-                    Formação complementar, profissional e social</text>
-                <text x="1210" y="1463" text-anchor="middle" class="small">Componentes que ampliam a formação e apoiam
-                    diferentes trajetórias</text>
-                <text x="1210" y="1492" text-anchor="middle" class="small">Ética e Legislação · Introdução a Sistemas de
-                    Informação · Português Instrumental · Inglês Instrumental · Métodos e Técnicas de Pesquisa</text>
-                <text x="1210" y="1518" text-anchor="middle" class="small">Sistemas Digitais e Circuitos Combinacionais
-                    · Atividades Acadêmico-Científico-Culturais · Projeto Integrador · TCC I e TCC II</text>
+
+                <!-- =================================================
+                     FORMAÇÃO COMPLEMENTAR
+                     ================================================= -->
+
+                <rect
+                    x="55"
+                    y="1400"
+                    width="2310"
+                    height="145"
+                    rx="18"
+                    fill="#fffbeb"
+                    stroke="#a16207"
+                    stroke-width="3"
+                />
+
+                <text
+                    x="1210"
+                    y="1433"
+                    text-anchor="middle"
+                    style="font-size:20px;font-weight:700;fill:#854d0e"
+                >
+                    7 · Formação complementar, profissional e social
+                </text>
+
+                <text
+                    x="1210"
+                    y="1463"
+                    text-anchor="middle"
+                    class="small"
+                >
+                    Componentes que ampliam a formação e apoiam diferentes trajetórias
+                </text>
+
+                <text
+                    x="1210"
+                    y="1492"
+                    text-anchor="middle"
+                    class="small"
+                >
+                    Ética e Legislação · Introdução a Sistemas de Informação · Português Instrumental · Inglês Instrumental
+                </text>
+
+                <text
+                    x="1210"
+                    y="1518"
+                    text-anchor="middle"
+                    class="small"
+                >
+                    Métodos e Técnicas de Pesquisa · Sistemas Digitais · Projeto Integrador · Atividades Acadêmico-Científico-Culturais · TCC I e TCC II
+                </text>
 
 
+                <!-- =================================================
+                     TÍTULO PROFISSÕES
+                     ================================================= -->
 
-                <!-- careers -->
-                <text x="1250" y="1585" text-anchor="middle" style="font-size:24px;font-weight:700">Possibilidades
-                    profissionais relacionadas à formação</text>
+                <text
+                    x="1250"
+                    y="1590"
+                    text-anchor="middle"
+                    style="font-size:25px;font-weight:700"
+                >
+                    Possibilidades profissionais relacionadas à formação
+                </text>
+
+                <text
+                    x="1250"
+                    y="1618"
+                    text-anchor="middle"
+                    style="font-size:14px;fill:#64748b"
+                >
+                    Clique em uma profissão para visualizar as disciplinas relacionadas
+                </text>
+
+
+                <!-- =================================================
+                     SETORES PROFISSIONAIS
+                     ================================================= -->
+
+
+                <!-- =========================
+                     SETOR 1
+                     DESENVOLVIMENTO
+                     ========================= -->
+
                 <g>
-                    <rect class="career-button" x="60" y="1660" width="330" height="100" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="225" y="1697"
-                        text-anchor="middle">Desenvolvedor de Software</text><text class="small" x="225" y="1722"
-                        text-anchor="middle">Back-end · Front-end · Full-Stack · Mobile</text>
-                    <rect class="career-button" x="410" y="1660" width="330" height="100" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="575" y="1697" text-anchor="middle">Analista de
-                        Dados / BI</text><text class="small" x="575" y="1722" text-anchor="middle">dados · estatística ·
-                        decisão</text>
-                    <rect class="career-button" x="760" y="1660" width="330" height="100" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="925" y="1697" text-anchor="middle">Inteligência
-                        Artificial / Dados</text><text class="small" x="925" y="1722" text-anchor="middle">IA ·
-                        mineração · modelos</text>
-                    <rect class="career-button" x="1110" y="1660" width="330" height="100" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="1275" y="1697" text-anchor="middle">Engenheiro
-                        de Software</text><text class="small" x="1275" y="1722" text-anchor="middle">processos ·
-                        arquitetura · qualidade</text>
-                    <rect class="career-button" x="1460" y="1660" width="330" height="100" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="1625" y="1697" text-anchor="middle">Redes /
-                        Infraestrutura</text><text class="small" x="1625" y="1722" text-anchor="middle">redes · sistemas
-                        · distribuídos</text>
-                    <rect class="career-button" x="1810" y="1660" width="330" height="100" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="1975" y="1697" text-anchor="middle">Gestão e
-                        Sistemas de Informação</text><text class="small" x="1975" y="1722"
-                        text-anchor="middle">governança · projetos · negócios</text>
-                    <rect class="career-button" x="235" y="1790" width="330" height="75" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="400" y="1822" text-anchor="middle">Analista de
-                        Sistemas</text>
-                    <rect class="career-button" x="600" y="1790" width="330" height="75" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="765" y="1822"
-                        text-anchor="middle">Administrador de Banco de Dados</text>
-                    <rect class="career-button" x="965" y="1790" width="330" height="75" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="1130" y="1822" text-anchor="middle">Segurança
-                        da Informação</text>
-                    <rect class="career-button" x="1330" y="1790" width="330" height="75" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="1495" y="1822" text-anchor="middle">Testes /
-                        Qualidade de Software</text>
-                    <rect class="career-button" x="1695" y="1790" width="330" height="75" rx="16" fill="#ecfeff"
-                        stroke="#0f766e" /><text class="career-title" x="1860" y="1822" text-anchor="middle">Arquiteto
-                        de Software</text>
+
+                    <rect
+                        class="sector-box"
+                        x="55"
+                        y="1650"
+                        width="570"
+                        height="260"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="80"
+                        y="1682"
+                        style="fill:#2563eb"
+                    >
+                        Desenvolvimento de Software
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="80"
+                        y="1705"
+                    >
+                        Programação, aplicações web e dispositivos móveis
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Desenvolvedor Back-end"
+                        x="80"
+                        y="1730"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="202"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Desenvolvedor Back-end
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Desenvolvedor Front-end"
+                        x="345"
+                        y="1730"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="467"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Desenvolvedor Front-end
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Desenvolvedor Full-Stack"
+                        x="80"
+                        y="1815"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="202"
+                        y="1853"
+                        text-anchor="middle"
+                    >
+                        Desenvolvedor Full-Stack
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Desenvolvedor Mobile"
+                        x="345"
+                        y="1815"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="467"
+                        y="1853"
+                        text-anchor="middle"
+                    >
+                        Desenvolvedor Mobile
+                    </text>
+
                 </g>
+
+
+                <!-- =========================
+                     SETOR 2
+                     DADOS
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="645"
+                        y="1650"
+                        width="570"
+                        height="260"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="670"
+                        y="1682"
+                        style="fill:#16803c"
+                    >
+                        Dados e Inteligência Artificial
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="670"
+                        y="1705"
+                    >
+                        Dados, estatística, inteligência e tomada de decisão
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Dados"
+                        x="670"
+                        y="1730"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="792"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Analista de Dados
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de BI"
+                        x="935"
+                        y="1730"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1057"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Analista de BI
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Cientista de Dados"
+                        x="670"
+                        y="1815"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="792"
+                        y="1853"
+                        text-anchor="middle"
+                    >
+                        Cientista de Dados
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Especialista em Inteligência Artificial"
+                        x="935"
+                        y="1815"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1057"
+                        y="1848"
+                        text-anchor="middle"
+                    >
+                        Especialista em
+                    </text>
+
+                    <text
+                        class="career-title"
+                        x="1057"
+                        y="1868"
+                        text-anchor="middle"
+                    >
+                        Inteligência Artificial
+                    </text>
+
+                </g>
+
+
+                <!-- =========================
+                     SETOR 3
+                     DADOS / BANCO
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="1235"
+                        y="1650"
+                        width="570"
+                        height="260"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="1260"
+                        y="1682"
+                        style="fill:#16803c"
+                    >
+                        Banco de Dados
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="1260"
+                        y="1705"
+                    >
+                        Armazenamento, organização e administração de dados
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Administrador de Banco de Dados"
+                        x="1260"
+                        y="1730"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1382"
+                        y="1758"
+                        text-anchor="middle"
+                    >
+                        Administrador de
+                    </text>
+
+                    <text
+                        class="career-title"
+                        x="1382"
+                        y="1778"
+                        text-anchor="middle"
+                    >
+                        Banco de Dados
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Engenheiro de Dados"
+                        x="1525"
+                        y="1730"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1647"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Engenheiro de Dados
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Banco de Dados"
+                        x="1260"
+                        y="1815"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1382"
+                        y="1848"
+                        text-anchor="middle"
+                    >
+                        Analista de Banco
+                    </text>
+
+                    <text
+                        class="career-title"
+                        x="1382"
+                        y="1868"
+                        text-anchor="middle"
+                    >
+                        de Dados
+                    </text>
+
+                </g>
+
+
+                <!-- =========================
+                     SETOR 4
+                     INFRAESTRUTURA
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="1825"
+                        y="1650"
+                        width="610"
+                        height="260"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="1850"
+                        y="1682"
+                        style="fill:#7c3aed"
+                    >
+                        Infraestrutura e Redes
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="1850"
+                        y="1705"
+                    >
+                        Redes, sistemas operacionais e ambientes distribuídos
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Administrador de Redes"
+                        x="1850"
+                        y="1730"
+                        width="250"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1975"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Administrador de Redes
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Infraestrutura"
+                        x="2115"
+                        y="1730"
+                        width="285"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="2257"
+                        y="1768"
+                        text-anchor="middle"
+                    >
+                        Analista de Infraestrutura
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Administrador de Sistemas"
+                        x="1850"
+                        y="1815"
+                        width="250"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1975"
+                        y="1853"
+                        text-anchor="middle"
+                    >
+                        Administrador de Sistemas
+                    </text>
+
+                </g>
+
+
+                <!-- =================================================
+                     SEGUNDA LINHA DE SETORES
+                     ================================================= -->
+
+
+                <!-- =========================
+                     SEGURANÇA
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="55"
+                        y="1940"
+                        width="570"
+                        height="215"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="80"
+                        y="1972"
+                        style="fill:#7c3aed"
+                    >
+                        Segurança da Informação
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="80"
+                        y="1995"
+                    >
+                        Proteção de sistemas, redes, dados e infraestrutura
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Segurança da Informação"
+                        x="80"
+                        y="2020"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="202"
+                        y="2053"
+                        text-anchor="middle"
+                    >
+                        Analista de Segurança
+                    </text>
+
+                    <text
+                        class="career-title"
+                        x="202"
+                        y="2073"
+                        text-anchor="middle"
+                    >
+                        da Informação
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Sistemas"
+                        x="345"
+                        y="2020"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="467"
+                        y="2058"
+                        text-anchor="middle"
+                    >
+                        Analista de Sistemas
+                    </text>
+
+                </g>
+
+
+                <!-- =========================
+                     QUALIDADE
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="645"
+                        y="1940"
+                        width="570"
+                        height="215"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="670"
+                        y="1972"
+                        style="fill:#db2777"
+                    >
+                        Qualidade e Testes
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="670"
+                        y="1995"
+                    >
+                        Processos, testes, qualidade e validação de software
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Testes"
+                        x="670"
+                        y="2020"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="792"
+                        y="2058"
+                        text-anchor="middle"
+                    >
+                        Analista de Testes
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Qualidade de Software"
+                        x="935"
+                        y="2020"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1057"
+                        y="2053"
+                        text-anchor="middle"
+                    >
+                        Analista de Qualidade
+                    </text>
+
+                    <text
+                        class="career-title"
+                        x="1057"
+                        y="2073"
+                        text-anchor="middle"
+                    >
+                        de Software
+                    </text>
+
+                </g>
+
+
+                <!-- =========================
+                     ARQUITETURA / ANÁLISE
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="1235"
+                        y="1940"
+                        width="570"
+                        height="215"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="1260"
+                        y="1972"
+                        style="fill:#db2777"
+                    >
+                        Arquitetura e Análise
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="1260"
+                        y="1995"
+                    >
+                        Sistemas, arquitetura e desenvolvimento de soluções
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Engenheiro de Software"
+                        x="1260"
+                        y="2020"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1382"
+                        y="2058"
+                        text-anchor="middle"
+                    >
+                        Engenheiro de Software
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Arquiteto de Software"
+                        x="1525"
+                        y="2020"
+                        width="245"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1647"
+                        y="2058"
+                        text-anchor="middle"
+                    >
+                        Arquiteto de Software
+                    </text>
+
+                </g>
+
+
+                <!-- =========================
+                     GESTÃO
+                     ========================= -->
+
+                <g>
+
+                    <rect
+                        class="sector-box"
+                        x="1825"
+                        y="1940"
+                        width="610"
+                        height="215"
+                        rx="18"
+                    />
+
+                    <text
+                        class="sector-title"
+                        x="1850"
+                        y="1972"
+                        style="fill:#c2410c"
+                    >
+                        Gestão e Negócios
+                    </text>
+
+                    <text
+                        class="sector-subtitle"
+                        x="1850"
+                        y="1995"
+                    >
+                        Gestão de projetos, negócios, governança e consultoria
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Gerente de Projetos"
+                        x="1850"
+                        y="2020"
+                        width="250"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="1975"
+                        y="2058"
+                        text-anchor="middle"
+                    >
+                        Gerente de Projetos
+                    </text>
+
+
+                    <rect
+                        class="career-button"
+                        data-career="Analista de Negócios"
+                        x="2115"
+                        y="2020"
+                        width="285"
+                        height="65"
+                        rx="12"
+                    />
+
+                    <text
+                        class="career-title"
+                        x="2257"
+                        y="2058"
+                        text-anchor="middle"
+                    >
+                        Analista de Negócios
+                    </text>
+
+                </g>
+
             </svg>
+
         </div>
 
+
+        <!-- =====================================================
+             FONTES
+             ===================================================== -->
+
         <section class="sources">
-            <strong>Base do mapa:</strong> matriz curricular e Projeto Pedagógico do Curso (PPC) do Bacharelado em
-            Sistemas de Informação do IFMG — Campus Ouro Branco. A organização por áreas é uma síntese visual das
+
+            <strong>Base do mapa:</strong>
+
+            matriz curricular e Projeto Pedagógico do Curso (PPC)
+            do Bacharelado em Sistemas de Informação do IFMG —
+            Campus Ouro Branco.
+
+            A organização por áreas é uma síntese visual das
             disciplinas; não é uma divisão oficial adicional do PPC.
+
             <br><br>
-            <strong>Fontes oficiais:</strong><br>
-            PPC: <a href="https://www.ifmg.edu.br/ourobranco/nossos-cursos/copy_of_PPCBSI_2022.pdf" target="_blank"
-                rel="noopener">PPC do curso</a><br>
-            Matriz: <a href="https://www.ifmg.edu.br/ourobranco/nossos-cursos/copy6_of_MatrizSI_2022_1.pdf"
-                target="_blank" rel="noopener">Matriz curricular 2022.1</a>
+
+            <strong>Fontes oficiais:</strong>
+
+            <br>
+
+            PPC:
+            <a
+                href="https://www.ifmg.edu.br/ourobranco/nossos-cursos/copy_of_PPCBSI_2022.pdf"
+                target="_blank"
+                rel="noopener"
+            >
+                PPC do curso
+            </a>
+
+            <br>
+
+            Matriz:
+            <a
+                href="https://www.ifmg.edu.br/ourobranco/nossos-cursos/copy6_of_MatrizSI_2022_1.pdf"
+                target="_blank"
+                rel="noopener"
+            >
+                Matriz curricular 2022.1
+            </a>
+
         </section>
-        <footer>Mapa estático em SVG — não utiliza bibliotecas externas nem JavaScript.</footer>
+
+
+        <footer>
+            Mapa desenvolvido em HTML, CSS, SVG e JavaScript — sem bibliotecas externas.
+        </footer>
+
     </main>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
     <script>
-        // ============================================================
-        // CAMINHOS PROFISSIONAIS
-        // ============================================================
+
+        /*
+         * ==========================================================
+         * CAMINHOS PROFISSIONAIS
+         * ==========================================================
+         *
+         * Cada profissão possui um conjunto de disciplinas
+         * relacionadas àquela trajetória.
+         *
+         * IMPORTANTE:
+         * essas disciplinas representam relações formativas,
+         * e não requisitos obrigatórios para exercer a profissão.
+         */
 
         const caminhos = {
 
-            "Desenvolvedor de Software": [
+            /* =====================================================
+               DESENVOLVIMENTO
+               ===================================================== */
+
+            "Desenvolvedor Back-end": [
+
+                "Introdução à Programação",
+                "Algoritmos e Estrutura de Dados I",
+                "Algoritmos e Estrutura de Dados II",
+                "Programação Orientada a Objetos I",
+                "Programação Orientada a Objetos II",
+                "Banco de Dados I",
+                "Programação Web",
+                "Engenharia de Software I",
+                "Engenharia de Software II",
+                "Sistemas Distribuídos"
+
+            ],
+
+
+            "Desenvolvedor Front-end": [
+
+                "Introdução à Programação",
+                "Algoritmos e Estrutura de Dados I",
+                "Programação Orientada a Objetos I",
+                "Programação Web",
+                "Interface Humano Computador",
+                "Engenharia de Software I"
+
+            ],
+
+
+            "Desenvolvedor Full-Stack": [
+
                 "Introdução à Programação",
                 "Algoritmos e Estrutura de Dados I",
                 "Algoritmos e Estrutura de Dados II",
                 "Programação Orientada a Objetos I",
                 "Programação Orientada a Objetos II",
                 "Programação Web",
-                "Programação para Dispositivos Móveis",
+                "Banco de Dados I",
                 "Engenharia de Software I",
                 "Engenharia de Software II",
-                "Banco de Dados I",
+                "Interface Humano Computador",
                 "Qualidade de Software"
+
             ],
 
-            "Analista de Dados / BI": [
+
+            "Desenvolvedor Mobile": [
+
+                "Introdução à Programação",
+                "Algoritmos e Estrutura de Dados I",
+                "Programação Orientada a Objetos I",
+                "Programação Orientada a Objetos II",
+                "Programação para Dispositivos Móveis",
+                "Engenharia de Software I",
+                "Interface Humano Computador"
+
+            ],
+
+
+            /* =====================================================
+               DADOS E IA
+               ===================================================== */
+
+            "Analista de Dados": [
+
                 "Banco de Dados I",
                 "Probabilidade e Estatística",
                 "Sistemas de Apoio a Decisão",
                 "Inteligência Artificial",
                 "Banco de Dados II",
                 "Mineração de Dados"
+
             ],
 
-            "Inteligência Artificial / Dados": [
+
+            "Analista de BI": [
+
+                "Banco de Dados I",
+                "Probabilidade e Estatística",
+                "Sistemas de Apoio a Decisão",
+                "Banco de Dados II",
+                "Mineração de Dados",
+                "Governança e Gestão da Informação"
+
+            ],
+
+
+            "Cientista de Dados": [
+
                 "Algoritmos e Estrutura de Dados I",
                 "Algoritmos e Estrutura de Dados II",
                 "Projeto e Análise de Algoritmos",
@@ -632,45 +2538,120 @@
                 "Álgebra Linear e Geometria Analítica",
                 "Matemática Discreta",
                 "Inteligência Artificial",
-                "Mineração de Dados",
-                "Tópicos Avançados em IA"
+                "Mineração de Dados"
+
             ],
 
-            "Engenheiro de Software": [
-                "Introdução à Programação",
+
+            "Especialista em Inteligência Artificial": [
+
                 "Algoritmos e Estrutura de Dados I",
                 "Algoritmos e Estrutura de Dados II",
-                "Programação Orientada a Objetos I",
-                "Programação Orientada a Objetos II",
-                "Engenharia de Software I",
-                "Engenharia de Software II",
-                "Interface Humano Computador",
-                "Qualidade de Software",
-                "Gestão de Projetos",
-                "Gerência de Projetos de Software",
-                "Sistemas de Garantia de Qualidade"
+                "Projeto e Análise de Algoritmos",
+                "Álgebra Linear e Geometria Analítica",
+                "Matemática Discreta",
+                "Probabilidade e Estatística",
+                "Inteligência Artificial",
+                "Mineração de Dados",
+                "Tópicos Avançados em IA"
+
             ],
 
-            "Redes / Infraestrutura": [
+
+            /* =====================================================
+               BANCO DE DADOS
+               ===================================================== */
+
+            "Administrador de Banco de Dados": [
+
+                "Banco de Dados I",
+                "Banco de Dados II",
+                "Sistemas Operacionais",
+                "Redes de Computadores I",
+                "Sistemas Distribuídos"
+
+            ],
+
+
+            "Engenheiro de Dados": [
+
+                "Banco de Dados I",
+                "Banco de Dados II",
+                "Algoritmos e Estrutura de Dados II",
+                "Probabilidade e Estatística",
+                "Sistemas Distribuídos",
+                "Mineração de Dados"
+
+            ],
+
+
+            "Analista de Banco de Dados": [
+
+                "Banco de Dados I",
+                "Banco de Dados II",
+                "Sistemas de Apoio a Decisão",
+                "Sistemas Operacionais",
+                "Redes de Computadores I"
+
+            ],
+
+
+            /* =====================================================
+               INFRAESTRUTURA
+               ===================================================== */
+
+            "Administrador de Redes": [
+
+                "Arquitetura e Organização",
+                "Sistemas Operacionais",
+                "Redes de Computadores I",
+                "Redes de Computadores II",
+                "Sistemas Distribuídos",
+                "Tópicos em Sistemas Computacionais"
+
+            ],
+
+
+            "Analista de Infraestrutura": [
+
                 "Arquitetura e Organização",
                 "Sistemas Operacionais",
                 "Redes de Computadores I",
                 "Sistemas Distribuídos",
-                "Redes de Computadores II",
-                "Tópicos em Sistemas Computacionais"
+                "Redes de Computadores II"
+
             ],
 
-            "Gestão e Sistemas de Informação": [
-                "Princípios da Administração I",
-                "Contabilidade",
-                "Governança e Gestão da Informação",
-                "Gestão de Projetos",
-                "Empreendedorismo",
-                "Consultoria Empresarial",
-                "Gestão da Inovação"
+
+            "Administrador de Sistemas": [
+
+                "Arquitetura e Organização",
+                "Sistemas Operacionais",
+                "Redes de Computadores I",
+                "Sistemas Distribuídos"
+
             ],
+
+
+            /* =====================================================
+               SEGURANÇA
+               ===================================================== */
+
+            "Analista de Segurança da Informação": [
+
+                "Arquitetura e Organização",
+                "Sistemas Operacionais",
+                "Redes de Computadores I",
+                "Redes de Computadores II",
+                "Sistemas Distribuídos",
+                "Banco de Dados I",
+                "Engenharia de Software I"
+
+            ],
+
 
             "Analista de Sistemas": [
+
                 "Introdução a Sistemas de Informação",
                 "Introdução à Programação",
                 "Algoritmos e Estrutura de Dados I",
@@ -680,34 +2661,58 @@
                 "Programação Web",
                 "Interface Humano Computador",
                 "Governança e Gestão da Informação"
+
             ],
 
-            "Administrador de Banco de Dados": [
-                "Banco de Dados I",
-                "Banco de Dados II",
-                "Sistemas Operacionais",
-                "Redes de Computadores I",
-                "Sistemas Distribuídos"
-            ],
 
-            "Segurança da Informação": [
-                "Arquitetura e Organização",
-                "Sistemas Operacionais",
-                "Redes de Computadores I",
-                "Sistemas Distribuídos",
-                "Banco de Dados I",
-                "Engenharia de Software I"
-            ],
+            /* =====================================================
+               QUALIDADE
+               ===================================================== */
 
-            "Testes / Qualidade de Software": [
+            "Analista de Testes": [
+
                 "Engenharia de Software I",
                 "Engenharia de Software II",
                 "Qualidade de Software",
                 "Sistemas de Garantia de Qualidade",
                 "Interface Humano Computador"
+
             ],
 
+
+            "Analista de Qualidade de Software": [
+
+                "Engenharia de Software I",
+                "Engenharia de Software II",
+                "Qualidade de Software",
+                "Sistemas de Garantia de Qualidade",
+                "Gerência de Projetos de Software"
+
+            ],
+
+
+            /* =====================================================
+               ARQUITETURA
+               ===================================================== */
+
+            "Engenheiro de Software": [
+
+                "Introdução à Programação",
+                "Algoritmos e Estrutura de Dados I",
+                "Algoritmos e Estrutura de Dados II",
+                "Programação Orientada a Objetos I",
+                "Programação Orientada a Objetos II",
+                "Engenharia de Software I",
+                "Engenharia de Software II",
+                "Qualidade de Software",
+                "Gestão de Projetos",
+                "Sistemas de Garantia de Qualidade"
+
+            ],
+
+
             "Arquiteto de Software": [
+
                 "Algoritmos e Estrutura de Dados II",
                 "Programação Orientada a Objetos II",
                 "Engenharia de Software I",
@@ -717,272 +2722,425 @@
                 "Sistemas Distribuídos",
                 "Banco de Dados I",
                 "Qualidade de Software"
+
+            ],
+
+
+            /* =====================================================
+               GESTÃO
+               ===================================================== */
+
+            "Gerente de Projetos": [
+
+                "Engenharia de Software I",
+                "Engenharia de Software II",
+                "Gestão de Projetos",
+                "Gerência de Projetos de Software",
+                "Governança e Gestão da Informação",
+                "Princípios da Administração I",
+                "Empreendedorismo"
+
+            ],
+
+
+            "Analista de Negócios": [
+
+                "Introdução a Sistemas de Informação",
+                "Princípios da Administração I",
+                "Contabilidade",
+                "Governança e Gestão da Informação",
+                "Sistemas de Apoio a Decisão",
+                "Engenharia de Software I",
+                "Gestão de Projetos"
+
             ]
+
         };
 
 
-        // ============================================================
-        // ENCONTRAR UMA DISCIPLINA PELO TEXTO
-        // ============================================================
-
-        function encontrarDisciplina(nome) {
-
-            const textos = document.querySelectorAll("svg text");
-
-            for (const texto of textos) {
-
-                const conteudo = texto.textContent
-                    .replace(/\s+/g, " ")
-                    .trim();
-
-                if (conteudo === nome) {
-
-                    // O <text> vem logo depois do <rect>
-                    const rect = texto.previousElementSibling;
-
-                    if (rect && rect.classList.contains("node")) {
-                        return rect;
-                    }
-                }
-            }
-
-            // Algumas disciplinas possuem o nome quebrado em mais de
-            // um elemento <text>. Neste caso procuramos pelo conteúdo
-            // do grupo.
-            const grupos = document.querySelectorAll("svg g");
-
-            for (const grupo of grupos) {
-
-                const conteudo = grupo.textContent
-                    .replace(/\s+/g, " ")
-                    .trim();
-
-                if (conteudo.includes(nome)) {
-
-                    const rects = grupo.querySelectorAll("rect.node");
-
-                    for (const rect of rects) {
-
-                        const textosDoRect = [];
-
-                        let elemento = rect.nextElementSibling;
-
-                        while (
-                            elemento &&
-                            elemento.tagName.toLowerCase() === "text"
-                        ) {
-                            textosDoRect.push(elemento.textContent);
-                            elemento = elemento.nextElementSibling;
-                        }
-
-                        const textoCompleto = textosDoRect
-                            .join(" ")
-                            .replace(/\s+/g, " ")
-                            .trim();
-
-                        if (textoCompleto.includes(nome)) {
-                            return rect;
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-
-
-        // ============================================================
-        // CRIA O GRUPO ONDE FICARÃO AS LINHAS
-        // ============================================================
+        /*
+         * ==========================================================
+         * REFERÊNCIA AO SVG
+         * ==========================================================
+         */
 
         const svg = document.querySelector("svg");
+
+
+        /*
+         * ==========================================================
+         * GRUPO DAS LINHAS DAS CARREIRAS
+         * ==========================================================
+         */
 
         const linksGroup = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "g"
         );
 
-        linksGroup.setAttribute("id", "career-links");
+        linksGroup.setAttribute(
+            "id",
+            "career-links"
+        );
 
-        // Coloca as linhas atrás das matérias
+        /*
+         * Coloca as linhas no começo do SVG,
+         * para ficarem atrás das disciplinas.
+         */
+
         svg.insertBefore(
             linksGroup,
-            svg.querySelector("rect")
+            svg.firstElementChild
         );
 
 
-        // ============================================================
-        // REMOVE AS LINHAS ANTERIORES
-        // ============================================================
+        /*
+         * ==========================================================
+         * ENCONTRAR DISCIPLINA
+         * ==========================================================
+         *
+         * Agora não dependemos mais do texto.
+         *
+         * Cada matéria possui:
+         *
+         * data-discipline="Nome da disciplina"
+         *
+         */
+
+        function encontrarDisciplina(nome) {
+
+            const disciplinas =
+                document.querySelectorAll(
+                    ".node[data-discipline]"
+                );
+
+            for (const disciplina of disciplinas) {
+
+                if (
+                    disciplina.dataset.discipline === nome
+                ) {
+
+                    return disciplina;
+
+                }
+
+            }
+
+            return null;
+        }
+
+
+        /*
+         * ==========================================================
+         * LIMPAR LINHAS
+         * ==========================================================
+         */
 
         function limparLinhas() {
 
             linksGroup.innerHTML = "";
+
         }
 
 
-        // ============================================================
-        // DESENHA UMA LINHA ENTRE A CARREIRA E A DISCIPLINA
-        // ============================================================
+        /*
+         * ==========================================================
+         * CRIAR LINHA
+         * ==========================================================
+         */
 
         function criarLinha(carreira, disciplina) {
 
-            const x = parseFloat(carreira.getAttribute("x"));
-            const y = parseFloat(carreira.getAttribute("y"));
-            const largura = parseFloat(carreira.getAttribute("width"));
+            const x =
+                parseFloat(carreira.getAttribute("x"));
 
-            const dx = parseFloat(disciplina.getAttribute("x"));
-            const dy = parseFloat(disciplina.getAttribute("y"));
-            const dlargura = parseFloat(disciplina.getAttribute("width"));
+            const y =
+                parseFloat(carreira.getAttribute("y"));
 
-            // Ponto inicial: centro superior da carreira
-            const inicioX = x + largura / 2;
-            const inicioY = y;
+            const largura =
+                parseFloat(carreira.getAttribute("width"));
 
-            // Ponto final: centro inferior da disciplina
-            const fimX = dx + dlargura / 2;
-            const fimY = dy + 75;
+            const altura =
+                parseFloat(carreira.getAttribute("height"));
 
-            // Cria uma curva em vez de uma linha reta
-            const caminho = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "path"
-            );
 
-            const meioY = (inicioY + fimY) / 2;
+            const dx =
+                parseFloat(disciplina.getAttribute("x"));
+
+            const dy =
+                parseFloat(disciplina.getAttribute("y"));
+
+            const dlargura =
+                parseFloat(disciplina.getAttribute("width"));
+
+
+            /*
+             * Centro inferior da profissão
+             */
+
+            const inicioX =
+                x + largura / 2;
+
+            const inicioY =
+                y;
+
+
+            /*
+             * Centro inferior da disciplina
+             */
+
+            const fimX =
+                dx + dlargura / 2;
+
+            const fimY =
+                dy + 75;
+
+
+            /*
+             * Cria o caminho SVG
+             */
+
+            const caminho =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "path"
+                );
+
+
+            /*
+             * Curvatura da linha
+             */
+
+            const meioY =
+                (inicioY + fimY) / 2;
+
 
             const d = `
-            M ${inicioX} ${inicioY}
-            C ${inicioX} ${meioY},
-              ${fimX} ${meioY},
-              ${fimX} ${fimY}
-        `;
+                M ${inicioX} ${inicioY}
+                C ${inicioX} ${meioY},
+                  ${fimX} ${meioY},
+                  ${fimX} ${fimY}
+            `;
 
-            caminho.setAttribute("d", d);
-            caminho.classList.add("career-link");
 
-            linksGroup.appendChild(caminho);
+            caminho.setAttribute(
+                "d",
+                d
+            );
+
+
+            caminho.classList.add(
+                "career-link"
+            );
+
+
+            linksGroup.appendChild(
+                caminho
+            );
+
         }
 
 
-        // ============================================================
-        // DEIXA TODAS AS MATÉRIAS NORMAIS
-        // ============================================================
+        /*
+         * ==========================================================
+         * LIMPAR DESTAQUES
+         * ==========================================================
+         */
 
         function limparDestaques() {
 
-            document.querySelectorAll(".node").forEach(node => {
+            document
+                .querySelectorAll(".node")
+                .forEach(node => {
 
-                node.classList.remove("highlighted");
-                node.classList.remove("dimmed");
-            });
+                    node.classList.remove(
+                        "highlighted"
+                    );
 
-            document.querySelectorAll(".career-button").forEach(button => {
-                button.classList.remove("career-selected");
-            });
+                    node.classList.remove(
+                        "dimmed"
+                    );
+
+                });
+
+
+            document
+                .querySelectorAll(".career-button")
+                .forEach(button => {
+
+                    button.classList.remove(
+                        "career-selected"
+                    );
+
+                });
+
 
             limparLinhas();
+
         }
 
 
-        // ============================================================
-        // MOSTRA O CAMINHO DA CARREIRA
-        // ============================================================
+        /*
+         * ==========================================================
+         * MOSTRAR CAMINHO
+         * ==========================================================
+         */
 
-        function mostrarCaminho(carreira, botao) {
+        function mostrarCaminho(
+            carreira,
+            botao
+        ) {
 
             limparDestaques();
 
-            const materias = caminhos[carreira];
+
+            const materias =
+                caminhos[carreira];
+
 
             if (!materias) {
-                console.warn("Carreira não encontrada:", carreira);
+
+                console.warn(
+                    "Carreira não encontrada:",
+                    carreira
+                );
+
                 return;
+
             }
 
-            // Deixa todas as matérias apagadas
-            document.querySelectorAll(".node").forEach(node => {
-                node.classList.add("dimmed");
-            });
 
-            // Destaca a carreira clicada
-            botao.classList.add("career-selected");
+            /*
+             * Deixa todas as disciplinas apagadas.
+             */
 
-            // Destaca as matérias relacionadas
-            materias.forEach(nomeMateria => {
+            document
+                .querySelectorAll(".node")
+                .forEach(node => {
 
-                const disciplina = encontrarDisciplina(nomeMateria);
-
-                if (disciplina) {
-
-                    disciplina.classList.remove("dimmed");
-                    disciplina.classList.add("highlighted");
-
-                    criarLinha(botao, disciplina);
-
-                } else {
-
-                    console.warn(
-                        "Disciplina não encontrada:",
-                        nomeMateria
+                    node.classList.add(
+                        "dimmed"
                     );
+
+                });
+
+
+            /*
+             * Destaca a profissão clicada.
+             */
+
+            botao.classList.add(
+                "career-selected"
+            );
+
+
+            /*
+             * Destaca as disciplinas relacionadas.
+             */
+
+            materias.forEach(
+                nomeMateria => {
+
+                    const disciplina =
+                        encontrarDisciplina(
+                            nomeMateria
+                        );
+
+
+                    if (disciplina) {
+
+                        disciplina.classList.remove(
+                            "dimmed"
+                        );
+
+                        disciplina.classList.add(
+                            "highlighted"
+                        );
+
+
+                        criarLinha(
+                            botao,
+                            disciplina
+                        );
+
+                    } else {
+
+                        console.warn(
+                            "Disciplina não encontrada:",
+                            nomeMateria
+                        );
+
+                    }
+
                 }
-            });
+            );
+
         }
 
 
-        // ============================================================
-        // TRANSFORMA AS CARREIRAS EM BOTÕES
-        // ============================================================
+        /*
+         * ==========================================================
+         * CLIQUE NAS PROFISSÕES
+         * ==========================================================
+         *
+         * Agora usamos:
+         *
+         * data-career="Nome da profissão"
+         *
+         * Portanto não precisamos procurar o texto
+         * pela posição do botão.
+         */
 
-        document.querySelectorAll(".career-button").forEach(botao => {
+        document
+            .querySelectorAll(".career-button")
+            .forEach(botao => {
 
-            botao.addEventListener("click", function () {
+                botao.addEventListener(
+                    "click",
+                    function () {
 
-                // Descobre o texto da carreira.
-                // Como o <text> vem depois do <rect>,
-                // pegamos o próximo elemento.
-                const grupo = this.parentElement;
+                        const carreira =
+                            this.dataset.career;
 
-                let carreira = "";
 
-                // Procuramos o texto da carreira mais próximo
-                const textos = Array.from(
-                    grupo.querySelectorAll("text")
+                        mostrarCaminho(
+                            carreira,
+                            this
+                        );
+
+                    }
                 );
 
-                const x = parseFloat(this.getAttribute("x"));
-                const y = parseFloat(this.getAttribute("y"));
-
-                let textoMaisProximo = null;
-                let menorDistancia = Infinity;
-
-                textos.forEach(texto => {
-
-                    const tx = parseFloat(texto.getAttribute("x"));
-                    const ty = parseFloat(texto.getAttribute("y"));
-
-                    const distancia =
-                        Math.abs(tx - (x + parseFloat(this.getAttribute("width")) / 2)) +
-                        Math.abs(ty - (y + 37));
-
-                    if (distancia < menorDistancia) {
-                        menorDistancia = distancia;
-                        textoMaisProximo = texto;
-                    }
-                });
-
-                if (textoMaisProximo) {
-                    carreira = textoMaisProximo.textContent
-                        .replace(/\s+/g, " ")
-                        .trim();
-                }
-
-                mostrarCaminho(carreira, this);
             });
 
-        });
+
+        /*
+         * ==========================================================
+         * CLIQUE NO FUNDO
+         * ==========================================================
+         *
+         * Se clicar fora de uma profissão,
+         * o mapa volta ao estado normal.
+         */
+
+        svg.addEventListener(
+            "click",
+            function (evento) {
+
+                if (
+                    evento.target === svg
+                ) {
+
+                    limparDestaques();
+
+                }
+
+            }
+        );
+
     </script>
+
 </body>
 
 </html>
+```
